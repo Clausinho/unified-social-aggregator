@@ -164,9 +164,9 @@ pnpm typecheck
 ## Help & Resources
 
 - **Security Policy**: [SECURITY.md](SECURITY.md)
-- **Detailed Scanning Guide**: [.github/SECURITY_SCANNING.md](.github/SECURITY_SCANNING.md)
+- **Detailed Scanning Guide**: [SECURITY_SCANNING.md](.github/SECURITY_SCANNING.md)
 - **Scan Results**: [SCANNING_RESULTS.md](SCANNING_RESULTS.md)
-- **GitHub Actions**: [.github/README.md](.github/README.md)
+- **GitHub Actions**: [GitHub README](.github/README.md)
 
 ## Emergency Contacts
 

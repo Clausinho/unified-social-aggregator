@@ -65,12 +65,12 @@ Add these badges to your main README.md:
 [![Security Scan](https://github.com/Clausinho/unified-social-aggregator/workflows/Security%20Scanning/badge.svg)](https://github.com/Clausinho/unified-social-aggregator/actions/workflows/security-scan.yml)
 ```
 
-## Required Secrets
+## Optional Secrets
 
-Some workflows may require secrets to be configured in repository settings:
+Some workflows reference optional secrets that can be configured in repository settings:
 
-- `CODECOV_TOKEN` - For code coverage reporting (optional)
-- `GITLEAKS_LICENSE` - For Gitleaks Pro features (optional)
+- `CODECOV_TOKEN` - Optional: For code coverage reporting to Codecov. The workflow will skip coverage upload if not configured.
+- `GITLEAKS_LICENSE` - Optional: For Gitleaks Pro features. Gitleaks will work without this secret using the free version.
 
 ## Customization
 

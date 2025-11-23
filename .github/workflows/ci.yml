@@ -1,0 +1,144 @@
+name: "Continuous Integration"
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  lint-backend:
+    name: Lint Backend
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'yarn'
+        cache-dependency-path: packages/backend/yarn.lock
+
+    - name: Install dependencies
+      working-directory: packages/backend
+      run: yarn install --frozen-lockfile
+
+    - name: Run ESLint
+      working-directory: packages/backend
+      run: yarn lint
+
+    - name: Run Prettier check
+      working-directory: packages/backend
+      run: yarn format --check
+
+  lint-frontend:
+    name: Lint Frontend
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.4.1
+
+    - name: Install dependencies
+      working-directory: packages/frontend
+      run: pnpm install --frozen-lockfile
+
+    - name: Run ESLint
+      working-directory: packages/frontend
+      run: pnpm lint
+
+    - name: Run Prettier check
+      working-directory: packages/frontend
+      run: pnpm format:check
+
+    - name: TypeScript check
+      working-directory: packages/frontend
+      run: pnpm typecheck
+
+  build-backend:
+    name: Build Backend
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'yarn'
+        cache-dependency-path: packages/backend/yarn.lock
+
+    - name: Install dependencies
+      working-directory: packages/backend
+      run: yarn install --frozen-lockfile
+
+    - name: Build
+      working-directory: packages/backend
+      run: yarn build
+
+  build-frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.4.1
+
+    - name: Install dependencies
+      working-directory: packages/frontend
+      run: pnpm install --frozen-lockfile
+
+    - name: Build
+      working-directory: packages/frontend
+      run: pnpm build
+
+  test-backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'yarn'
+        cache-dependency-path: packages/backend/yarn.lock
+
+    - name: Install dependencies
+      working-directory: packages/backend
+      run: yarn install --frozen-lockfile
+
+    - name: Run tests
+      working-directory: packages/backend
+      run: yarn test
+
+    - name: Upload coverage
+      uses: codecov/codecov-action@v4
+      if: always()
+      with:
+        files: packages/backend/coverage/lcov.info
+        flags: backend
+        token: ${{ secrets.CODECOV_TOKEN }}

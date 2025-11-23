@@ -12,6 +12,8 @@ jobs:
   npm-audit-backend:
     name: NPM Audit - Backend
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -43,6 +45,8 @@ jobs:
   npm-audit-frontend:
     name: NPM Audit - Frontend
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -77,6 +81,9 @@ jobs:
   trivy-scan:
     name: Trivy Vulnerability Scanner
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -99,6 +106,8 @@ jobs:
   secret-scanning:
     name: Secret Scanning with Gitleaks
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4

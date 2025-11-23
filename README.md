@@ -1,8 +1,15 @@
 
 # Unified Social Aggregator Project
 
+[![CodeQL](https://github.com/Clausinho/unified-social-aggregator/workflows/CodeQL%20Security%20Scanning/badge.svg)](https://github.com/Clausinho/unified-social-aggregator/actions/workflows/codeql-analysis.yml)
+[![CI](https://github.com/Clausinho/unified-social-aggregator/workflows/Continuous%20Integration/badge.svg)](https://github.com/Clausinho/unified-social-aggregator/actions/workflows/ci.yml)
+[![Security Scan](https://github.com/Clausinho/unified-social-aggregator/workflows/Security%20Scanning/badge.svg)](https://github.com/Clausinho/unified-social-aggregator/actions/workflows/security-scan.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 The goal of this project is to create a multi-platform application that consolidates content from YouTube, Reddit, Facebook, TikTok, and other social media and news media, and other media services into one unified experience. Users will manage multiple social accounts and enjoy an integrated feed that’s customizable, interactive, and adaptive to their preferences.
+
+> **Security Note**: This project implements comprehensive security scanning including CodeQL, dependency audits, secret detection, and SAST. See [SECURITY.md](SECURITY.md) for more information.
 
 
 ## Table of Contents
@@ -221,3 +228,123 @@ The app is designed as a central hub where users can:
 - **Scalability:** Design infrastructure to support a growing user base and increasing data loads.
 
 ---
+
+---
+
+## Development Setup
+
+### Prerequisites
+
+- Node.js 20+
+- Yarn (for backend)
+- pnpm 10.4.1+ (for frontend)
+- PostgreSQL (for backend database)
+
+### Backend Setup
+
+```bash
+cd packages/backend
+
+# Install dependencies
+yarn install
+
+# Copy environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
+# Run Prisma migrations
+npx prisma migrate dev
+
+# Start development server
+yarn start:dev
+```
+
+### Frontend Setup
+
+```bash
+cd packages/frontend
+
+# Install dependencies
+pnpm install
+
+# Copy environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
+# Start development server
+pnpm dev
+```
+
+### Running Tests
+
+```bash
+# Backend tests
+cd packages/backend
+yarn test
+
+# Frontend tests (when available)
+cd packages/frontend
+pnpm test
+```
+
+### Linting and Formatting
+
+```bash
+# Backend
+cd packages/backend
+yarn lint
+yarn format
+
+# Frontend
+cd packages/frontend
+pnpm lint
+pnpm format:check
+```
+
+---
+
+## Security
+
+This project implements comprehensive security measures and scanning:
+
+### Automated Security Scanning
+
+- **CodeQL Analysis**: Detects security vulnerabilities in code
+- **Dependency Scanning**: Regular checks for vulnerable dependencies via Dependabot
+- **Secret Scanning**: Detects accidentally committed secrets with Gitleaks
+- **SAST**: Static Application Security Testing with Semgrep
+- **Container Scanning**: Trivy scans for vulnerabilities
+- **npm/pnpm Audit**: Dependency vulnerability audits
+
+### Security Best Practices
+
+- All sensitive data stored in environment variables
+- OAuth 2.0 for authentication
+- JWT for secure session management
+- Input validation and sanitization
+- HTTPS-only in production
+- Regular security updates via Dependabot
+
+### Reporting Security Issues
+
+Please report security vulnerabilities privately. See [SECURITY.md](SECURITY.md) for details.
+
+### Security Documentation
+
+- [SECURITY.md](SECURITY.md) - Security policy and vulnerability reporting
+- [.github/SECURITY_SCANNING.md](.github/SECURITY_SCANNING.md) - Detailed security scanning guide
+
+---
+
+## CI/CD
+
+This project uses GitHub Actions for continuous integration and deployment:
+
+- **Linting**: ESLint and Prettier checks
+- **Building**: Build verification for both frontend and backend
+- **Testing**: Automated test execution
+- **Security**: Multiple security scanning layers
+- **Dependencies**: Automated dependency updates
+
+See [.github/README.md](.github/README.md) for detailed workflow information.
+
